@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Bar</title>
+</head>
+<body>
+    <style>
+        body {
+            background-image: url(images/back.jpg);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+            color: white;
+        }
+        #cofeName {
+            font-size: 3em;
+            color: skyblue;
+            border: 4px solid skyblue;
+            border-left: none; border-right: none;
+            padding: 15px;
+        }
+        .lists {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 10%;
+            width: 90%;
+        }
+        .lists ul {
+            text-align: center;
+            list-style: none; 
+            padding: 0  0 15px 0;  
+            margin:0px;
+        }
+        .lists ul li {
+            margin: 7px 0px;
+            font-size: large;
+        }
+        #coffee {
+            background-color: rgba(139, 68, 68, 0.596);
+        }
+        #tea {
+            background-color: rgba(0, 112, 0, 0.658);
+        }
+        #fastfood {
+            background-color: rgba(105, 0, 105, 0.644);
+        }
+        #pizza {
+            background-color: rgba(218, 165, 32, 0.603);
+        }
+        #info {
+            width: 100%;
+            border-top: 5px double skyblue;
+            background-color: rgba(0, 0, 0, 0.527);
+            direction: rtl;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+    <header>
+        <h1 id="cofeName"> نام کافه</h1>
+    </header>
+
+    <div class="lists">
+        <ul id="coffee"><h1>قهوه </h1></ul>
+        <ul id="tea"><h1>چای و دمنوش</h1></ul>
+        <ul id="fastfood"><h1>ساندویچ</h1></ul>
+        <ul id="pizza"><h1>پیتزا</h1></ul>
+    </div>
+
+    <footer id="info">
+        <p></p>
+        <p></p>
+        <p></p>
+    </footer>
+    
+
+
+    <script>
+        const coffee = document.querySelector("#coffee");
+        const tea = document.querySelector("#tea");
+        const fastfood = document.querySelector("#fastfood");
+        const pizza = document.querySelector("#pizza");
+        const info = document.querySelector("#info");
+
+        const getListOf = {
+            coffee: ()=>{
+                fetch("https://opensheet.elk.sh/1vezWJSK0lCV06iFcCfwrtqXEV0Aasm5K3m13tmv6Q5c/coffee")
+                .then(res => res.json())
+                .then((data) => {
+                    data.map(item => {
+                        const li = document.createElement("li");
+                        li.textContent = `${item.coffee}: ${item.price} تومان`;
+                        coffee.append(li);
+                    })
+                })
+            },
+
+            tae: ()=>{
+                fetch("https://opensheet.elk.sh/1vezWJSK0lCV06iFcCfwrtqXEV0Aasm5K3m13tmv6Q5c/tea")
+                .then(res => res.json())
+                .then((data) => {
+                    data.map(item => {
+                    
+                        const li = document.createElement("li");
+                        li.textContent = `${item.tea}: ${item.price} تومان`;
+                        tea.append(li)
+                    })
+                })
+            },
+
+            fastFood: ()=>{
+                fetch("https://opensheet.elk.sh/1vezWJSK0lCV06iFcCfwrtqXEV0Aasm5K3m13tmv6Q5c/fastfood")
+                .then(res => res.json())
+                .then((data) => {
+                    data.map(item => {
+                    
+                        const li = document.createElement("li");
+                        li.textContent = `${item.fastfood}: ${item.price} تومان`;
+                        fastfood.append(li)
+                    })
+                })
+            },
+
+            Pizza: ()=>{
+                fetch("https://opensheet.elk.sh/1vezWJSK0lCV06iFcCfwrtqXEV0Aasm5K3m13tmv6Q5c/pizza")
+                .then(res => res.json())
+                .then((data) => {
+                    data.map(item => {
+                    
+                        const li = document.createElement("li");
+                        li.textContent = `${item.pizza}: ${item.price} تومان`;
+                        pizza.append(li)
+                    })
+                })
+            },
+
+            information: ()=>{
+                fetch("https://opensheet.elk.sh/1vezWJSK0lCV06iFcCfwrtqXEV0Aasm5K3m13tmv6Q5c/info")
+                .then(res => res.json())
+                .then((data) => {
+                    info.children[0].textContent =  `${data[0].information}: ${data[0].value}`
+                    info.children[1].textContent =  `${data[1].information}: ${data[1].value}`
+                    info.children[2].textContent =  `${data[2].information}: ${data[2].value}`
+                    
+                })
+            },
+        };
+
+
+        document.addEventListener("DOMContentLoaded" , ()=>{
+            getListOf.coffee();
+            getListOf.tae();
+            getListOf.fastFood();
+            getListOf.Pizza();
+            getListOf.information();
+        })
+        
+    </script>
+</body>
+</html>
